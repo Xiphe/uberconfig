@@ -1,0 +1,16 @@
+{
+  "name": "uberconfig",
+  "version": "0.0.0",
+  "description": "configuration manager for multi-module configs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "config",
+    "shared",
+    "manage"
+  ],
+  "author": "Hannes Diercks <uberconfig@xiphe.net>",
+  "license": "MIT"
+}
