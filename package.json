@@ -1,10 +1,10 @@
 {
   "name": "uberconfig",
-  "version": "0.0.0",
   "description": "configuration manager for multi-module configs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\"",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
     "config",
@@ -16,5 +16,12 @@
   "dependencies": {
     "dot-object": "1.3.1",
     "useful-type": "0.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xiphe/uberconfig.git"
+  },
+  "devDependencies": {
+    "semantic-release": "^4.3.5"
   }
 }
