@@ -64,6 +64,112 @@ config.request({
 // {newKey: 'amet', bar: {foo: 'baz'}}
 ```
 
+environment variables and CLI params
+------------------------------------
+
+Given script `foo.js`:
+
+```js
+const Uberconfig = require('uberconfig');
+console.log(new Uberconfig().get('foo.bar', 'hey'));
+```
+
+Shell usage:
+
+```sh
+node foo.js
+# logs: hey
+
+UBERCONFIG_FOO_BAR=ho node foo.js
+# logs: ho
+
+node foo.js --uc-foo-bar='lets go'
+# logs: lets go
+```
+
+CLI param > environment variable > config value > default value
+
+
+Options
+-------
+
+can be passed as second parameter into construction
+
+```js
+new Uberconfig(config, options);
+```
+
+ - ### `options.envPrefix:String`
+   __Default: `UBERCONFIG_`__
+
+   prefix for environment variable lookup
+
+ - ### `options.envConverter:Function`
+   function converting a config key to environment variable name  
+   default will convert `a.foo` to `A_FOO`  
+   In combination with `envPrefix` `a.foo` can be set using
+   `UBERCONFIG_A_FOO=bar`
+
+ - ### `options.cliPrefix:String`
+   __Default: `uc-`__
+
+   prefix for CLI parameter lookup
+
+ - ### `options.cliConverter:Function`
+   function converting a config key to CLI parameter name  
+   default will convert `a.foo` to `a-foo`  
+   In combination with `cliPrefix` `a.foo` can be set using
+   `--uc-a-foo=bar`
+
+
+Multi type values
+-----------------
+
+In case you do not know which type a configuration variable must have
+by default, wrap it up as a MultiTypeValue.
+
+_Hint: Do not do this, it's an anti-pattern.  
+May be required when you pass though parts of the uberconfig API..._
+
+See [implementation of MultiTypeValue](https://github.com/Xiphe/uberconfig/blob/master/lib/MultiTypeValue.js) for details
+
+```js
+const Uberconfig = require('uberconfig');
+const MultiTypeValue = Uberconfig.MultiTypeValue;
+
+class MyMultiTypeValue extends MultiTypeValue {
+  convertBoolean(value) {
+    if (value === 5) {
+      return true;
+    }
+
+    return false;
+  }
+  convertString(value) {
+    if (value === 5) {
+      return 'ipsum';
+    }
+
+    return value + '';
+  }
+}
+
+const someUserInput = 5;
+const myConf = {
+  foo: {
+    bar: new MyMultiTypeValue(someUserInput)
+  }
+};
+
+const booleanDefaultVal = false;
+console.log(new Uberconfig(myConf).get('foo.bar', booleanDefaultVal));
+// logs true
+
+const stringDefaultVal = 'lorem';
+console.log(new Uberconfig(myConf).get('foo.bar', stringDefaultVal));
+// logs 'ipsum'
+```
+
 License
 -------
 
