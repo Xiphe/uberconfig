@@ -8,6 +8,26 @@ uberconfig
 configuration manager for multi-module configs.
 
 
+In order to...
+--------------
+
+In order to share configuration between parts of an application that 
+do not even know each other.
+
+Multiple configuration consumers come into an agreement by passing a 
+default value with each request for a configuration value. — Given 
+the default values are equal, we assume the consumers are up to the
+same thing.
+
+This will hopefully lead to a world with fever unnecessary namespaces
+and more communication between maintainers of modules that share same
+intentions. In the case of conflicting default values, I would love to see
+the conflicting parties come to an agreement together instead of
+expanding the namespaces.
+
+<3
+
+
 Install
 -------
 
