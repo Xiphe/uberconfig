@@ -1,9 +1,11 @@
 uberconfig
 ==========
 
-[![Build Status](https://img.shields.io/travis/Xiphe/uberconfig/master.svg?style=flat-square)](https://travis-ci.org/Xiphe/uberconfig)
-[![David](https://img.shields.io/david/Xiphe/uberconfig.svg?style=flat-square)](https://david-dm.org/Xiphe/uberconfig)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
+[![Build Status](https://travis-ci.org/Xiphe/uberconfig.svg?branch=master)](https://travis-ci.org/Xiphe/uberconfig)
+[![Coverage Status](https://coveralls.io/repos/github/Xiphe/uberconfig/badge.svg?branch=master)](https://coveralls.io/github/Xiphe/uberconfig?branch=master)
+[![bitHound Overall Score](https://www.bithound.io/github/Xiphe/uberconfig/badges/score.svg)](https://www.bithound.io/github/Xiphe/uberconfig)
+[![bitHound Dependencies](https://www.bithound.io/github/Xiphe/uberconfig/badges/dependencies.svg)](https://www.bithound.io/github/Xiphe/uberconfig/master/dependencies/npm)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 configuration manager for multi-module configs.
 
