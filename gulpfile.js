@@ -1,14 +1,17 @@
 'use strict';
 
-const proxyquire = require('proxyquire');
+const fs = require('fs');
+const path = require('path');
+const uberconfigProxy = path.resolve('./node_modules/uberconfig.js');
+if (!fs.existsSync(uberconfigProxy)) {
+  fs.writeFileSync(
+    uberconfigProxy,
+    'module.exports = require("../transparent");'
+  );
+}
+
 const gulp = require('gulp');
-const Uberconfig = require('./index');
-Uberconfig['@noCallThru'] = true;
-Uberconfig['@global'] = true;
-const GulpToolboxRegistry = proxyquire(
-  './node_modules/gulp-toolbox-registry/index',
-  { uberconfig: Uberconfig }
-);
+const GulpToolboxRegistry = require('gulp-toolbox-registry');
 const testNodeJasmine = require('gulp-toolbox-test-node-jasmine');
 const pipeCoverageIstanbul = require('gulp-toolbox-pipe-coverage-istanbul');
 const reporterCoverage = require('gulp-toolbox-reporter-coveralls');
