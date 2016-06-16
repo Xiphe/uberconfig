@@ -1,9 +1,7 @@
 'use strict';
 
-// const proxyquire = require('proxyquire');
-const Uberconfig = require('../index');
+const Uberconfig = require('../lib/Uberconfig');
 const errorMatching = require('./helper/errorMatching');
-
 
 describe('Uberconfig', () => {
   let fooValue = null;
