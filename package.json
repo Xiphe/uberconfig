@@ -3,7 +3,7 @@
   "description": "configuration manager for multi-module configs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
+    "test": "gulp test",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "keywords": [
@@ -23,6 +23,13 @@
     "url": "https://github.com/Xiphe/uberconfig.git"
   },
   "devDependencies": {
-    "semantic-release": "^4.3.5"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-toolbox-pipe-coverage-istanbul": "0.2.2",
+    "gulp-toolbox-registry": "0.3.6",
+    "gulp-toolbox-reporter-coveralls": "0.1.1",
+    "gulp-toolbox-test-node-jasmine": "0.2.3",
+    "proxyquire": "1.7.9",
+    "semantic-release": "4.3.5",
+    "undertaker-task-provider-registry": "1.2.1"
   }
 }
