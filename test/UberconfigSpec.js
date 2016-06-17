@@ -38,5 +38,47 @@ describe('Uberconfig', () => {
 
       expect(() => config.get('bar')).toThrow(errorMatching('"bar"'));
     });
+
+    it('throws when configuration types are incompatible', () => {
+      const config = new Uberconfig({ foo: false });
+
+      expect(
+        () => config.get('foo', 'false')
+      ).toThrow(errorMatching('must be of type string but is boolean'));
+    });
+
+    it(
+      'throws when a different default parameter has been used' +
+      ' in a prior get',
+      () => {
+        const config = new Uberconfig({ foo: 1 });
+
+        config.get('foo', 2);
+
+        expect(
+          () => config.get('foo', 3)
+        ).toThrow(errorMatching('conflicting default values for uberconfig'));
+      }
+    );
+
+    it('supports a conflict resolver as third parameter', () => {
+      const config = new Uberconfig({ foo: fooValue });
+      const resolvedDefault = { defaultValue: barValue };
+      const resolver = jasmine.createSpy().and.returnValue(resolvedDefault);
+
+      config.get('foo', barValue);
+      const result = config.get('foo', bazValue, resolver);
+
+      expect(result).toBe(fooValue);
+      expect(resolver.calls.count()).toBe(1);
+      expect(resolver).toHaveBeenCalledWith(
+        jasmine.objectContaining({ defaultValue: bazValue }),
+        [
+          jasmine.objectContaining({ defaultValue: barValue }),
+          resolvedDefault,
+        ],
+        'foo'
+      );
+    });
   });
 });
