@@ -77,11 +77,11 @@ config.get('foo', 'D', function resolveDefaultConflict(myDefault, conflicts, key
 
 config.request({
   'lorem.sit': {
-    defaultValue: 'something',
+    default: 'something',
     as: 'newKey'
   },
   'bar.foo': {
-    defaultValue: 'baz'
+    default: 'baz'
   }
 });
 // {newKey: 'amet', bar: {foo: 'baz'}}
