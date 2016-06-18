@@ -1,6 +1,7 @@
 'use strict';
 
 const proxyquire = require('proxyquire');
+const MultiTypeValue = require('../lib/MultiTypeValue');
 const errorMatching = require('./helper/errorMatching');
 
 describe('Uberconfig', () => {
@@ -131,6 +132,117 @@ describe('Uberconfig', () => {
         foo: fooValue,
         bar: { baz: bazValue },
       });
+    });
+  });
+
+  describe('with environment variables', () => {
+    it('converts falsy strings to false', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = '0';
+      expect(config.get('foo', true)).toBe(false);
+      fakeProcess.env.UBERCONFIG_FOO = 'null';
+      expect(config.get('foo', true)).toBe(false);
+      fakeProcess.env.UBERCONFIG_FOO = 'false';
+      expect(config.get('foo', true)).toBe(false);
+      fakeProcess.env.UBERCONFIG_FOO = 'NaN';
+      expect(config.get('foo', true)).toBe(false);
+      fakeProcess.env.UBERCONFIG_FOO = 'undefined';
+      expect(config.get('foo', true)).toBe(false);
+    });
+
+    it('converts truthy strings to true', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = 'some string';
+      expect(config.get('foo', true)).toBe(true);
+      fakeProcess.env.UBERCONFIG_FOO = 'true';
+      expect(config.get('foo', true)).toBe(true);
+    });
+
+    it('converts to numbers', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = '1.5';
+      expect(config.get('foo', 0)).toBe(1.5);
+    });
+
+    it('converts to string', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = { hey: 'ho' };
+      expect(config.get('foo', 'world')).toBe('{"hey":"ho"}');
+
+      fakeProcess.env.UBERCONFIG_FOO = [1];
+      fakeProcess.env.UBERCONFIG_FOO.toString = () => 'foo';
+      expect(config.get('foo', 'world')).toBe('foo');
+
+      fakeProcess.env.UBERCONFIG_FOO = 1;
+      expect(config.get('foo', 'world')).toBe('1');
+    });
+
+    it('converts strings to array', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = 'a,b,c';
+
+      expect(config.get('foo', [])).toEqual(['a', 'b', 'c']);
+    });
+
+    it('wraps other values with array', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = 1;
+
+      expect(config.get('foo', [])).toEqual([1]);
+    });
+
+    it('wraps values with getter function', () => {
+      const config = new Uberconfig();
+
+      fakeProcess.env.UBERCONFIG_FOO = 'bar';
+
+      expect(config.get('foo', () => {})()).toEqual('bar');
+    });
+  });
+
+  describe('with MultiTypeValue', () => {
+    it('can resolve to multiple types', () => {
+      const mtv = new MultiTypeValue('false');
+      const config = new Uberconfig({
+        foo: mtv,
+        bar: mtv,
+      });
+
+      expect(config.get('foo', true)).toBe(false);
+      expect(config.get('bar', 'baz')).toBe('false');
+    });
+
+    it('gives up when there is no converter for a given type', () => {
+      const mtv = new MultiTypeValue(1);
+      const config = new Uberconfig({
+        foo: mtv,
+      });
+
+      expect(() => config.get('foo', new Date()))
+        .toThrow(errorMatching('must be of type date but is number'));
+    });
+
+    it('is extendible', () => {
+      const mtv = new MultiTypeValue(1);
+      const someDate = new Date();
+      mtv.convertDate = () => someDate;
+      const config = new Uberconfig({
+        foo: mtv,
+      });
+
+      expect(config.get('foo', new Date())).toBe(someDate);
+    });
+
+    it('can be used as a string', () => {
+      const mtv = new MultiTypeValue({ foo: 'bar' });
+
+      expect(`${mtv}`).toBe('{"foo":"bar"}');
     });
   });
 });
