@@ -1,17 +1,27 @@
 'use strict';
 
-const Uberconfig = require('../lib/Uberconfig');
+const proxyquire = require('proxyquire');
 const errorMatching = require('./helper/errorMatching');
 
 describe('Uberconfig', () => {
   let fooValue = null;
   let barValue = null;
   let bazValue = null;
+  let Uberconfig = null;
+  let fakeProcess = null;
 
   beforeEach(() => {
     fooValue = Symbol('foo');
     barValue = Symbol('bar');
     bazValue = Symbol('baz');
+    fakeProcess = {
+      argv: [],
+      env: {},
+    };
+
+    Uberconfig = proxyquire('../lib/Uberconfig', {
+      './process': fakeProcess,
+    });
   });
 
   describe('#get', () => {
@@ -79,6 +89,48 @@ describe('Uberconfig', () => {
         ],
         'foo'
       );
+    });
+
+    it('tries to get a value from environment', () => {
+      const config = new Uberconfig({ foo: { bar: fooValue } });
+
+      fakeProcess.env.UBERCONFIG_FOO_BAR = barValue;
+
+      expect(config.get('foo.bar', bazValue)).toBe(barValue);
+    });
+
+    it('tries to get a value from CLI argument', () => {
+      const val = 'foo';
+      const config = new Uberconfig({ foo: { bar: 'bar' } });
+
+      fakeProcess.env.UBERCONFIG_FOO_BAR = 'baz';
+      fakeProcess.argv.push(
+        null,
+        null,
+        `--uc-foo-bar=${val}`
+      );
+
+      expect(config.get('foo.bar', 'lorem')).toBe(val);
+    });
+  });
+
+  describe('#request', () => {
+    it('gets multiple configuration values at once', () => {
+      const config = new Uberconfig({
+        foo: fooValue,
+        bar: { baz: bazValue },
+        lorem: 'asd',
+      });
+
+      const result = config.request({
+        foo: { default: barValue },
+        'bar.baz': { default: barValue },
+      });
+
+      expect(result).toEqual({
+        foo: fooValue,
+        bar: { baz: bazValue },
+      });
     });
   });
 });
