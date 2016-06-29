@@ -31,7 +31,7 @@
     "gulp-toolbox-registry": "0.4.0",
     "gulp-toolbox-reporter-coveralls": "0.1.1",
     "gulp-toolbox-test-node-jasmine": "0.2.3",
-    "proxyquire": "1.7.9",
+    "proxyquire": "1.7.10",
     "semantic-release": "4.3.5",
     "undertaker-task-provider-registry": "1.2.1"
   }
