@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = require('./index');
+
 Object.keys(require.cache)
   .filter(cachedPath => (
     cachedPath.indexOf('uberconfig') !== -1 &&

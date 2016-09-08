@@ -4,6 +4,7 @@
   },
   "rules": {
     "max-statements": 0,
-    "max-nested-callbacks": 0
+    "max-nested-callbacks": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }

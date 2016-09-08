@@ -1,7 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
+
 const uberconfigProxy = path.resolve('./node_modules/uberconfig.js');
 if (!fs.existsSync(uberconfigProxy)) {
   fs.writeFileSync(
