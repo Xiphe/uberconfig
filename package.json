@@ -23,7 +23,7 @@
     "url": "https://github.com/Xiphe/uberconfig.git"
   },
   "devDependencies": {
-    "eslint": "3.7.1",
+    "eslint": "3.10.1",
     "eslint-config-airbnb-base": "8.0.0",
     "eslint-plugin-import": "2.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
