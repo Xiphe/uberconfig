@@ -2,5 +2,17 @@
   "extends": "airbnb-base",
   "parserOptions": {
     "sourceType": "script"
+  },
+  "rules": {
+    "arrow-body-style": 0,
+    "prefer-rest-params": 0,
+    "prefer-spread": 0,
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }]
   }
 }
