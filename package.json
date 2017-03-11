@@ -29,7 +29,7 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-toolbox-pipe-coverage-istanbul": "0.2.5",
     "gulp-toolbox-registry": "0.4.3",
-    "gulp-toolbox-reporter-coveralls": "0.1.3",
+    "gulp-toolbox-reporter-coveralls": "0.1.4",
     "gulp-toolbox-test-node-jasmine": "0.2.6",
     "proxyquire": "1.7.11",
     "semantic-release": "6.3.2",
