@@ -32,7 +32,7 @@
     "gulp-toolbox-reporter-coveralls": "0.1.4",
     "gulp-toolbox-test-node-jasmine": "0.2.6",
     "proxyquire": "1.8.0",
-    "semantic-release": "6.3.6",
+    "semantic-release": "8.0.0",
     "undertaker-task-provider-registry": "1.2.1"
   }
 }
