@@ -53,9 +53,8 @@ describe('Uberconfig', () => {
     it('throws when configuration types are incompatible', () => {
       const config = new Uberconfig({ foo: false });
 
-      expect(
-        () => config.get('foo', 'false')
-      ).toThrow(errorMatching('must be of type string but is boolean'));
+      expect(() => config.get('foo', 'false'))
+        .toThrow(errorMatching('must be of type string but is boolean'));
     });
 
     it(
@@ -66,9 +65,8 @@ describe('Uberconfig', () => {
 
         config.get('foo', 2);
 
-        expect(
-          () => config.get('foo', 3)
-        ).toThrow(errorMatching('conflicting default values for uberconfig'));
+        expect(() => config.get('foo', 3))
+          .toThrow(errorMatching('conflicting default values for uberconfig'));
       }
     );
 
