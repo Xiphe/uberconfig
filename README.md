@@ -1,6 +1,8 @@
 uberconfig
 ==========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Xiphe/uberconfig.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/Xiphe/uberconfig.svg?branch=master)](https://travis-ci.org/Xiphe/uberconfig)
 [![Coverage Status](https://coveralls.io/repos/github/Xiphe/uberconfig/badge.svg?branch=master)](https://coveralls.io/github/Xiphe/uberconfig?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/Xiphe/uberconfig/badges/score.svg)](https://www.bithound.io/github/Xiphe/uberconfig)
